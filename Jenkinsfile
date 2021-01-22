@@ -15,7 +15,7 @@ def helmDeploy(Map args) {
 // jenkins slave 执行流水线任务
 timeout(time: 600, unit: 'SECONDS') {
     try{
-        def label = "jnlp-agent"
+        def label = "jnlp-slave"
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) {
                 stage('Git阶段'){
