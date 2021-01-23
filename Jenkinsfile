@@ -26,7 +26,7 @@ timeout(time: 600, unit: 'SECONDS') {
                     echo "Maven 阶段"
                     container('maven') {
                         //这里引用上面设置的全局的 settings.xml 文件，根据其ID将其引入并创建该文件
-                        configFileProvider([configFile(fileId: "75884c5a-4ec2-4dc0-8d87-58b6b1636f8a", targetLocation: "settings.xml")]){
+                        configFileProvider([configFile(fileId: "c94f922c-5a2d-4fab-a6fe-1eb98298392c", targetLocation: "settings.xml")]){
                             sh "mvn clean install -Dmaven.test.skip=true --settings settings.xml"
                         }
                     }
