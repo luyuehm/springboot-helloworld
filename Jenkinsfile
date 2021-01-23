@@ -71,9 +71,9 @@ timeout(time: 600, unit: 'SECONDS') {
                             echo "Helm 初始化"
                             helmDeploy(init: true ,url: "${repo_url}");
                             echo "Helm 执行部署测试"
-                            helmDeploy(init: false ,dry_run: true ,name: "${app_name}" ,namespace: "mydlqcloud" ,image: "${images}" ,tag: "${tag}" , values: "${values}" ,template: "${template}")
+                            helmDeploy(init: false ,dry_run: true ,name: "${app_name}" ,namespace: "default" ,image: "${images}" ,tag: "${tag}" , values: "${values}" ,template: "${template}")
                             echo "Helm 执行正式部署"
-                            helmDeploy(init: false ,dry_run: false ,name: "${app_name}" ,namespace: "mydlqcloud",image: "${images}" ,tag: "${tag}" , values: "${values}" ,template: "${template}")
+                            helmDeploy(init: false ,dry_run: false ,name: "${app_name}" ,namespace: "default",image: "${images}" ,tag: "${tag}" , values: "${values}" ,template: "${template}")
                         }
                     }
                 }
