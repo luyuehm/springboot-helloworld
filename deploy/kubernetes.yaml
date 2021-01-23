@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: springboot-helloworld
+  namespace: default  
   labels:
     app: springboot-helloworld
 spec:
@@ -22,6 +23,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: springboot-helloworld
+  namespace: default
   labels:
     app: springboot-helloworld
 spec:
@@ -50,3 +52,22 @@ spec:
           requests:
             cpu: 500m
             memory: 256Mi
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: helloworld-ingress
+  namespace: default
+spec:
+  tls:
+    - hosts:
+        - hello.sparke.cn
+      secretName: sparke-certs
+  rules:
+    - host: hello.sparke.cn
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: springboot-helloworld
+              servicePort: 8080              
