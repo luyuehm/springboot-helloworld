@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: springboot-helloworld
-        image: 10.71.164.28:5000/springboot-helloworld:0.0.1
+        image: hb.sparke.cn/k8s/springboot-helloworld:0.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
