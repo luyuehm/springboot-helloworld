@@ -51,34 +51,4 @@ spec:
             memory: 512Mi
           requests:
             cpu: 500m
-            memory: 256Mi
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: web-nginx-ingress
-  namespace: default
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-    # 开启use-regex，启用path的正则匹配
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    nginx.ingress.kubernetes.io/enable-access-log: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-       access_log /var/log/nginx/web-nginx.access.log upstreaminfo if=$loggable;
-       error_log  /var/log/nginx/web-nginx.error.log;
-spec:
-  tls:
-  - hosts:
-    - hello.sparke.cn
-    secretName: sparke-certs
-  rules:
-  - host: hello.sparke.cn
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: springboot-helloworld
-          servicePort: 8080          
+            memory: 256Mi        
