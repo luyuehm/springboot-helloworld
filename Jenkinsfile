@@ -1,12 +1,10 @@
+parameters {
+  gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
+}   
 // jenkins slave 执行流水线任务
 timeout(time: 600, unit: 'SECONDS') {
     try{
-        def label = "jnlp-agent"
-        parameters {
-            gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', 
-            name: 'tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', 
-            type: 'PT_TAG'
-        }        
+        def label = "jnlp-agent"  
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) {
                 stage('Git阶段'){
