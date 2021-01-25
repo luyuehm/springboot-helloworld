@@ -1,5 +1,4 @@
-FROM registry.cn-shanghai.aliyuncs.com/mydlq/openjdk:8u201-jdk-alpine3.9
-VOLUME /tmp
+FROM hb.sparke.cn/k8s/jdk8-centos7:latest
 ADD target/*.jar app.jar
 RUN sh -c 'touch /app.jar'
 ENV JAVA_OPTS="-Xmx512M -Xms256M -Xss256k -Duser.timezone=Asia/Shanghai"
