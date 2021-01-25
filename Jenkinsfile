@@ -6,7 +6,7 @@ timeout(time: 600, unit: 'SECONDS') {
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) {
                 stage('Git阶段'){
-                    echo "Git 阶段 build_tag ${build_tag} BUILD_ID ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                    echo "Git 阶段 build_tag ${build_tag}"
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
                 }
                 stage('Maven阶段'){
