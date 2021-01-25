@@ -40,27 +40,6 @@ timeout(time: 600, unit: 'SECONDS') {
                 }
                 stage('Deploy阶段') {
                     echo "Deploy Stage"
-                    def userInput = input(
-                        id: 'userInput',
-                        message: 'Choose a deploy environment',
-                        parameters: [
-                            [
-                                $class: 'ChoiceParameterDefinition',
-                                choices: "Dev\nQA\nProd",
-                                name: 'Env'
-                            ]
-                        ]
-                    )
-                    echo "This is a deploy step to ${userInput}"
-                    sh "sed -i 's/<BUILD_TAG>/${build_tag}/' deploy/kubernetes.yaml"
-                    sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' deploy/kubernetes.yaml"
-                    if (userInput == "Dev") {
-                        // deploy dev stuff
-                    } else if (userInput == "QA"){
-                        // deploy qa stuff
-                    } else {
-                        // deploy prod stuff
-                    }
                     sh "kubectl apply -f deploy/kubernetes.yaml"
                 }
             }
