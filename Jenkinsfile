@@ -6,7 +6,7 @@ timeout(time: 600, unit: 'SECONDS') {
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) {
                 stage('Git阶段'){
-                    echo "Git 阶段"
+                    echo "Git 阶段 ${build_tag}"
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
                 }
                 stage('Maven阶段'){
@@ -38,8 +38,8 @@ timeout(time: 600, unit: 'SECONDS') {
                         }
                     }
                 }
-                stage('Deploy') {
-                    echo "6. Deploy Stage"
+                stage('Deploy阶段') {
+                    echo "Deploy Stage"
                     def userInput = input(
                         id: 'userInput',
                         message: 'Choose a deploy environment',
