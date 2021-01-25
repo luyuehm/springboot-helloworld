@@ -2,7 +2,9 @@
 timeout(time: 600, unit: 'SECONDS') {
     try{
         def label = "jnlp-agent"
-        
+        parameters {
+  gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'PT_TAG'
+}        
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) {
                 stage('Git阶段'){
