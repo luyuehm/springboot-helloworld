@@ -6,7 +6,7 @@ timeout(time: 600, unit: 'SECONDS') {
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) {
                 stage('Git阶段'){
-                    echo "Git 阶段 ${build_tag}"
+                    echo "Git 阶段 build_tag ${build_tag} BUILD_ID ${env.BUILD_ID} on ${env.JENKINS_URL}"
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
                 }
                 stage('Maven阶段'){
@@ -42,21 +42,6 @@ timeout(time: 600, unit: 'SECONDS') {
                     echo "Deploy Stage"
                     sh "kubectl apply -f deploy/kubernetes.yaml"
                 }
-            }
-        }
-    }catch(Exception e) {
-        currentBuild.result = "FAILURE"
-    }finally {
-        // 获取执行状态
-        def currResult = currentBuild.result ?: 'SUCCESS' 
-        // 判断执行任务状态，根据不同状态发送邮件
-        stage('email'){
-            if (currResult == 'SUCCESS') {
-                echo "发送成功邮件"
-                emailext(subject: '任务执行成功',to: '285798521@qq.com',body: '''任务已经成功构建完成...''')
-            }else {
-                echo "发送失败邮件"
-                emailext(subject: '任务执行失败',to: '285798521@qq.com',body: '''任务执行失败构建失败...''')
             }
         }
     }
