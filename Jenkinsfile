@@ -3,10 +3,10 @@ timeout(time: 600, unit: 'SECONDS') {
     try{
         def label = "jnlp-agent"  
         podTemplate(label: label,cloud: 'kubernetes' ){
+            parameters {
+                gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'TAG', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
+            }
             node (label) {
-                parameters {
-                    gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'TAG', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
-                }
                 stage('Git阶段'){
                     echo "Git 阶段${params.TAG}"
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
