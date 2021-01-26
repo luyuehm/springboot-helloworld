@@ -1,12 +1,12 @@
 // jenkins slave 执行流水线任务
 timeout(time: 600, unit: 'SECONDS') {
     try{
-        parameters {
-            gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
-        }
         def label = "jnlp-agent"  
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) {
+                parameters {
+                    gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
+                }
                 stage('Git阶段'){
                     echo "Git 阶段${tag}"
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
