@@ -3,12 +3,12 @@ timeout(time: 600, unit: 'SECONDS') {
     try{
         def label = "jnlp-agent"  
         podTemplate(label: label,cloud: 'kubernetes' ){
-            parameters {
-                gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'TAG', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
-            }
             node (label) {
+                parameters {
+                    gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'TAG', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
+                }
                 stage('Git阶段'){
-                    echo "Git 阶段${params.TAG}"
+                    echo "Git 阶段${parameters.TAG}"
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
                 }
                 stage('Maven阶段'){
@@ -16,7 +16,7 @@ timeout(time: 600, unit: 'SECONDS') {
                         //这里引用上面设置的全局的 settings.xml 文件，根据其ID将其引入并创建该文件
                         configFileProvider([configFile(fileId: "c94f922c-5a2d-4fab-a6fe-1eb98298392c", targetLocation: "settings.xml")]){
                             sh "mvn clean install -Dmaven.test.skip=true --settings settings.xml"
-                        }    
+                            }    
                     }
                 }
                 stage('Docker阶段'){
