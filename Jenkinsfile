@@ -8,7 +8,7 @@ timeout(time: 600, unit: 'SECONDS') {
                     gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'Tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
                 }
                 stage('Git阶段'){
-                    echo "Git 阶段...:${Tag}"
+                    echo "Git 阶段${params.name}."
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
                 }
                 stage('Maven阶段'){
