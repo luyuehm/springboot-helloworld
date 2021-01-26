@@ -4,19 +4,15 @@ timeout(time: 600, unit: 'SECONDS') {
         def label = "jnlp-agent"  
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) { 
-                agent any
-                parameters {
-                    gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'Tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
-                }
                 stage('Git阶段'){
-                    echo "Git 阶段${params.Tag}."
+                    echo "Git 阶段"
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
                 }
                 stage('Maven阶段'){
                     container('maven') {
                         //这里引用上面设置的全局的 settings.xml 文件，根据其ID将其引入并创建该文件
                         configFileProvider([configFile(fileId: "c94f922c-5a2d-4fab-a6fe-1eb98298392c", targetLocation: "settings.xml")]){
-                            //sh "mvn clean install -Dmaven.test.skip=true --settings settings.xml"
+                            sh "mvn clean install -Dmaven.test.skip=true --settings settings.xml"
                             }    
                     }
                 }
@@ -35,15 +31,15 @@ timeout(time: 600, unit: 'SECONDS') {
                             // 设置推送到aliyun仓库的mydlq项目下，并用pom里面设置的项目名与版本号打标签
                             def customImage = docker.build("${hub}/${project_name}/${pom.artifactId}:${pom.version}")
                             echo "推送镜像"
-                            //customImage.push()
+                            customImage.push()
                             echo "删除镜像"
-                            //sh "docker rmi ${hub}/${project_name}/${pom.artifactId}:${pom.version}" 
+                            sh "docker rmi ${hub}/${project_name}/${pom.artifactId}:${pom.version}" 
                         }
                     }
                 }
                 stage('Deploy阶段') {
                     echo "Deploy Stage"
-                    //sh "kubectl apply -f deploy/kubernetes.yaml"
+                    sh "kubectl apply -f deploy/kubernetes.yaml"
                 }
             }
         }
