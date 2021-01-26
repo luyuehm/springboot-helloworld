@@ -1,4 +1,5 @@
 pipeline {
+    agent any
     parameters {
       gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
     }
