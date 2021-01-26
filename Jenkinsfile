@@ -5,10 +5,10 @@ timeout(time: 600, unit: 'SECONDS') {
         podTemplate(label: label,cloud: 'kubernetes' ){
             node (label) {
                 parameters {
-                    gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'TAG', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
+                    gitParameter branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'Tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
                 }
                 stage('Git阶段'){
-                    echo "Git 阶段...:${params.TAG}"
+                    echo "Git 阶段...:${params.Tag}"
                     git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
                 }
                 stage('Maven阶段'){
