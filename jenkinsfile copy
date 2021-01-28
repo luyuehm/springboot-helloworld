@@ -1,10 +1,49 @@
+pipeline{
+    agent{
+        label "jnlp-agent"
+    }
+    parameters {
+        gitParameter branch: '', branchFilter: '.*', defaultValue: 'master', description: '', name: 'Tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
+    }
+    stages{
+        stage('Git阶段'){
+            echo "Git 阶段${Tag}"
+            git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
+        }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
+        }
+    }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+}
+parameters {
+    gitParameter branch: '', branchFilter: '.*', defaultValue: 'master', description: '', name: 'Tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_TAG'
+}
 def label = "jnlp-agent"
-
 podTemplate(label: label,cloud: 'kubernetes' ){
     node (label) {
         stage('Git阶段'){
-            echo "Git 阶段${params.Tag}"
-            git branch: "${params.Tag}" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
+            echo "Git 阶段"
+            git branch: "master" ,changelog: true , url: "https://github.com/luyuehm/springboot-helloworld.git"
         }
         stage('Maven阶段'){
             container('maven') {
