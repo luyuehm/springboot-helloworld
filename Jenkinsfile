@@ -56,8 +56,8 @@ timeout(time: 600, unit: 'SECONDS') {
                 emailext body: '''任务已经成功构建完成...''', subject: '任务执行成功', to: 'luyue@sparke.cn'
             }else {
                 echo "发送失败邮件"
-               //emailext(subject: '任务执行失败',to: '285797521@qq.com',body: '''任务执行失败构建失败...''')
-               emailext body: '''任务执行失败构建失败...''', subject: '任务执行失败', to: 'luyue@sparke.cn'
+                //emailext(subject: '任务执行失败',to: '285797521@qq.com',body: '''任务执行失败构建失败...''')
+                emailext body: '''任务执行失败构建失败...''', subject: '任务执行失败', to: 'luyue@sparke.cn'
             }
         }
     }
